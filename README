@@ -1,0 +1,53 @@
+README
+
+doi2bib.py reads doi-data from a file or a single doi entry
+and spits out a bibtex entry onto stdout using the api
+
+wget -o doi2bib.log -O - http://api.crossref.org/works/DOICODE/transform/application/x-bibtex
+
+Dependencies: python3, argparse, textwrap, wget, unix-like environment. 
+
+For a quick help:
+
+python doi2bib.py --help
+
+with a single doi code you can do this:
+
+> python ~/bin/doi2bib.py 10.1073/pnas.1810239116 
+
+@article{Mashayekhi_2019,
+	doi = {10.1073/pnas.1810239116},
+	url = {https://doi.org/10.1073%2Fpnas.1810239116},
+	year = 2019,
+	month = {mar},
+	publisher = {Proceedings of the National Academy of Sciences},
+	volume = {116},
+	number = {13},
+	pages = {6244--6249},
+	author = {Somayeh Mashayekhi and Peter Beerli},
+	title = {Fractional coalescent},
+	journal = {Proceedings of the National Academy of Sciences}
+} 
+
+
+I have a large folder with PDF files and used this to generate a raw doi file
+ grep -h -a -E "prism:doi" /path/to/your/pdfsfolder/*.pdf | sed 's/prism:doi//g;s/<>//g' > doitemp
+ you will need manually clean the list and if it looks something like this:
+ 10.1080/01621459.2013.866565
+ 10.1016/j.tree.2014.03.002
+ 10.1016/j.matcom.2014.02.005
+ 10.1016/j.compbiolchem.2010.09.001
+ 10.1371/journal.pcbi.1003537
+ 10.1371/journal.pcbi.1003537
+ 10.1016/j.jmps.2019.04.005
+ 10.1186/1748-7188-7-13
+ then call
+
+> python doi2bib.py doifile > tmp.bib
+and tmp.bib will contain the bibliography descriptors
+
+
+(c) Peter Beerli, Tallahassee FL 32311 July 2021
+
+
+
